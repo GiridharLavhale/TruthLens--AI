@@ -1,11 +1,24 @@
+
 import re
 import nltk
 
 from nltk.corpus import stopwords
 
-nltk.download('stopwords')
+stop_words = None
 
-stop_words = set(stopwords.words('english'))
+
+def get_stop_words():
+    global stop_words
+
+    if stop_words is None:
+        try:
+            stop_words = set(stopwords.words('english'))
+        except LookupError:
+            nltk.download('stopwords', quiet=True)
+            stop_words = set(stopwords.words('english'))
+
+    return stop_words
+
 
 def clean_text(text):
 
@@ -17,7 +30,7 @@ def clean_text(text):
 
     filtered_words = [
         word for word in words
-        if word not in stop_words
+        if word not in get_stop_words()
     ]
 
     return " ".join(filtered_words)

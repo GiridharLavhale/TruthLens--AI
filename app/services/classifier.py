@@ -1,13 +1,23 @@
+
 import joblib
 
 from app.services.preprocessing import clean_text
 
-# Load trained model and vectorizer
-model = joblib.load("app/models/fake_news_model.pkl")
-vectorizer = joblib.load("app/models/vectorizer.pkl")
+model = None
+vectorizer = None
+
+
+def load_classifier():
+    global model, vectorizer
+
+    if model is None or vectorizer is None:
+        model = joblib.load("app/models/fake_news_model.pkl")
+        vectorizer = joblib.load("app/models/vectorizer.pkl")
 
 
 def predict_text(text):
+
+    load_classifier()
 
     cleaned = clean_text(text)
 
