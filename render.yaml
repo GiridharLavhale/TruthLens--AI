@@ -1,12 +1,12 @@
-services:
 
-* type: web
+services:
+  - type: web
     name: truthlens-ai-api
     runtime: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app –host 0.0.0.0 –port $PORT
+    buildCommand: pip install -r requirements-local.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /
     envVars:
-    * key: PYTHON_VERSION
+      - key: PYTHON_VERSION
         value: 3.11.11
