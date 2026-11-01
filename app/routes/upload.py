@@ -1,19 +1,10 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import FileResponse
 
-from app.services.audio_extractor import extract_audio
-from app.services.transcriber import transcribe_audio
-from app.services.classifier import predict_text
-from app.services.keyword_checker import detect_keywords
-from app.services.ocr_extractor import extract_text_from_video
-from app.services.deepfake_detector import detect_deepfake
-from app.services.report_generator import generate_report
 
 from app.database.db import SessionLocal
 from app.database.db import VideoAnalysis
 
-from app.services.explainer import explain_content
-from app.services.category_detector import detect_category
 
 import os
 import time
@@ -30,6 +21,14 @@ UPLOAD_FOLDER = "uploads"
 
 @router.post("/analyze-video")
 async def analyze_video(file: UploadFile = File(...)):
+    from app.services.audio_extractor import extract_audio
+    from app.services.transcriber import transcribe_audio
+    from app.services.classifier import predict_text
+    from app.services.keyword_checker import detect_keywords
+    from app.services.ocr_extractor import extract_text_from_video
+    from app.services.deepfake_detector import detect_deepfake
+    from app.services.explainer import explain_content
+    from app.services.category_detector import detect_category
 
     # -----------------------------------------------------
     # Start total timer
@@ -423,6 +422,7 @@ def get_history():
 def generate_analysis_report(
     video_id: int
 ):
+    from app.services.report_generator import generate_report
 
     db = SessionLocal()
 
